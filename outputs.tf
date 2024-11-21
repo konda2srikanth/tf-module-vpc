@@ -1,47 +1,19 @@
-output "VPC_ID" {
-    value = aws_vpc.main.id
+output "vpc_id" {
+  value = aws_vpc.main.id
 }
 
-output "VPC_CIDR" {
-    value = aws_vpc.main.cidr_block
+output "lb_subnet_ids" {
+  value = aws_subnet.db.*.id
 }
 
-output "PUBLIC_SUBNET_IDS" {
-    value = aws_subnet.public.*.id
+output "eks_subnet_ids" {
+  value = aws_subnet.eks.*.id
 }
 
-output "PRIVATE_SUBNET_IDS" {
-    value = aws_subnet.private.*.id
+output "rds_subnet_ids" {
+  value = aws_subnet.db.*.id
 }
 
-output "PUBLIC_SUBNET_CIDR" {
-    value = aws_subnet.public.*.cidr_block
-}
-
-output "PRIVATE_SUBNET_CIDR" {
-    value = aws_subnet.private.*.cidr_block
-}
-
-output "DEFAULT_VPC_ID" {
-    value = var.DEFAULT_VPC_ID
-}
-
-output "DEFAULT_VPC_CIDR" {
-    value = var.DEFAULT_VPC_CIDR
-}
-
-output "PRIVATE_HOSTEDZONE_ID" {
-    value = var.PRIVATE_HOSTEDZONE_ID
-}
-
-output "PRIVATE_HOSTEDZONE_NAME" {
-    value = var.PRIVATE_HOSTEDZONE_NAME
-}
-
-output "PUBLIC_HOSTEDZONE_ID" {
-    value = var.PUBLIC_HOSTEDZONE_ID
-}
-
-output "PUBLIC_HOSTEDZONE_NAME" {
-    value = var.PUBLIC_HOSTEDZONE_NAME
+output "eks_subnet_cidr" {
+  value = aws_subnet.eks.*.cidr_block
 }

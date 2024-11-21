@@ -1,24 +1,26 @@
-resource "aws_subnet" "public" {
-  count                   = length(var.PUBLIC_SUBNET_CIDR)
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = element(var.PUBLIC_SUBNET_CIDR, count.index)
-  availability_zone       = element(var.AZ, count.index)
-  map_public_ip_on_launch = true
+resource "aws_subnet" "lb" {
+  count             = length(var.lb_subnet_cidr)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.lb_subnet_cidr[count.index]
+  availability_zone = var.azs[count.index]
 
-  tags = {
-    Name = "${var.ENV}-pub-${element(var.AZ, count.index)}"
-  }
+  tags = local.lb_subnet_tags
 }
 
+resource "aws_subnet" "eks" {
+  count             = length(var.eks_subnet_cidr)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.eks_subnet_cidr[count.index]
+  availability_zone = var.azs[count.index]
 
-resource "aws_subnet" "private" {
-  count               = length(var.PRIVATE_SUBNET_CIDR)
-  vpc_id              = aws_vpc.main.id
-  cidr_block          = element(var.PRIVATE_SUBNET_CIDR, count.index)
-  availability_zone   = element(var.AZ, count.index)
-
-  tags = {
-    Name = "${var.ENV}-prv-${element(var.AZ, count.index)}"
-  }
+  tags = local.eks_subnet_tags
 }
 
+resource "aws_subnet" "db" {
+  count             = length(var.db_subnet_cidr)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.db_subnet_cidr[count.index]
+  availability_zone = var.azs[count.index]
+
+  tags = local.db_subnet_tags
+}
